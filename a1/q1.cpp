@@ -3,6 +3,44 @@
 #include <iostream>
 using namespace std;
 
+void print_frequency(int freq[]) {
+
+  cout << endl << endl << "-----------------" << endl << endl;
+
+  for (int i = 0; i < 26; i++) {
+    if (freq[i] != 0) {
+      cout << char(i + 'A') << " - " << freq[i] << endl;
+    }
+  }
+
+  cout << endl << "-----------------" << endl;
+}
+
+// Function to calculate the frequencies
+// of each character of the string
+int find_frequency(const string &str) {
+  int freq[26] = {0};
+
+  for (char c : str) {
+    if (isalpha(c)) {
+      freq[tolower(c) - 'a']++;
+    }
+  }
+
+  int max_freq = 0;
+  char most_frequent = '\0';
+
+  for (int i = 0; i < 26; ++i) {
+    if (freq[i] > max_freq) {
+      max_freq = freq[i];
+      most_frequent = 'a' + i;
+    }
+  }
+
+  print_frequency(freq);
+  return most_frequent;
+}
+
 vector<string> get_substrings(const string &cypher, int gcd) {
   vector<string> substrings(gcd);
 
@@ -99,5 +137,17 @@ int main() {
 
   for (int i = 0; i < substrings.size(); ++i) {
     std::cout << "Substring " << i << ": " << substrings[i] << std::endl;
+  }
+
+  vector<char> letters;
+  for (int i = 0; i < substrings.size(); ++i) {
+    char most_freq = find_frequency(substrings[i]);
+    letters.push_back(most_freq);
+  }
+
+  for (char c : letters) {
+    // Shift 4 letters to the left, wrapping around if needed
+    char shifted = ((c - 'a' - 4 + 26) % 26) + 'a';
+    std::cout << shifted << " ";
   }
 }
