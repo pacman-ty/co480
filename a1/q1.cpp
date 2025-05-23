@@ -1,16 +1,29 @@
+#include <algorithm>
 #include <bits/stdc++.h>
 #include <iostream>
 using namespace std;
 
-int find_gcd() {
-  int gcd;
+int find_gcd(const vector<int> &indices) {
+  if (indices.size() < 2)
+    return 0;
+
+  vector<int> dvals;
+  for (size_t i = 0; i < indices.size() - 1; ++i) {
+    dvals.push_back(indices[i + 1] - indices[i]);
+  }
+
+  int gcd = dvals[0];
+  for (size_t i = 1; i < dvals.size(); ++i) {
+    gcd = __gcd(gcd, dvals[i]);
+  }
+
   return gcd;
 }
 
-vector<int> find_dvalue(const string &cypher, const string &key) {
+vector<int> find_indices(const string &cypher, const string &key) {
   int clen = cypher.length();
   int klen = key.length();
-  std::vector<int> indices;
+  vector<int> indices;
 
   // Check for all occurrences
   for (size_t i = 0; i <= clen - klen; ++i) {
@@ -66,5 +79,9 @@ int main() {
 
   cout << repeat;
 
-  find_dvalue(cypher, repeat);
+  vector<int> indices = find_indices(cypher, "JXNLAGI");
+
+  int gcd = find_gcd(indices);
+
+  cout << gcd;
 }
