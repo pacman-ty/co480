@@ -2,6 +2,26 @@
 #include <iostream>
 using namespace std;
 
+int find_gcd() {
+  int gcd;
+  return gcd;
+}
+
+vector<int> find_dvalue(const string &cypher, const string &key) {
+  int clen = cypher.length();
+  int klen = key.length();
+  std::vector<int> indices;
+
+  // Check for all occurrences
+  for (size_t i = 0; i <= clen - klen; ++i) {
+    if (cypher.substr(i, klen) == key) {
+      indices.push_back(i + 1); // +1 for 1-based index
+    }
+  }
+
+  return indices;
+}
+
 string largest_repeat(const string &cypher) {
   int n = cypher.length();
   vector<int> dp(n + 1, 0);
@@ -45,4 +65,6 @@ int main() {
   string repeat = largest_repeat(cypher);
 
   cout << repeat;
+
+  find_dvalue(cypher, repeat);
 }
