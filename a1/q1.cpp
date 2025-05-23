@@ -3,6 +3,16 @@
 #include <iostream>
 using namespace std;
 
+vector<string> get_substrings(const string &cypher, int gcd) {
+  vector<string> substrings(gcd);
+
+  for (size_t i = 0; i < cypher.length(); ++i) {
+    substrings[i % gcd] += cypher[i];
+  }
+
+  return substrings;
+}
+
 int find_gcd(const vector<int> &indices) {
   if (indices.size() < 2)
     return 0;
@@ -77,11 +87,17 @@ int main() {
 
   string repeat = largest_repeat(cypher);
 
-  cout << repeat;
+  cout << repeat << endl;
 
   vector<int> indices = find_indices(cypher, "JXNLAGI");
 
   int gcd = find_gcd(indices);
 
-  cout << gcd;
+  cout << gcd << endl;
+
+  vector<string> substrings = get_substrings(cypher, gcd);
+
+  for (int i = 0; i < substrings.size(); ++i) {
+    std::cout << "Substring " << i << ": " << substrings[i] << std::endl;
+  }
 }
